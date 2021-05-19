@@ -80,16 +80,37 @@ Function Get-Code
 
 }
 
-Function Display-Game ($code, $mnchash)
+Function Display-Game ($userguess, $mnchash)
 {
-    #Display game screen
+    # Display game screen
+    $guess0 = $userguess[0]
+    $guess1 = $userguess[1]
+    $guess2 = $userguess[2]
+    $guess3 = $userguess[3]
+    $code_table = "
+            +-------+-------+-------+-------+
+    Code    |   X   |   X   |   X   |   X   |
+            +-------+-------+-------+-------+
+    Guess   |   $guess0   |   $guess1   |   $guess2    |   $guess3  |
+            +-------+-------+-------+-------+
+    "
+    # Display score in a table
+    $mac = $mnchash.mac
+    $che = $mnchash.cheese
+    $user_score = "
+    ┌───────┬────────┐
+    │  Mac  │ Cheese │
+    ├───────┼────────┤
+    │   $mac   │    $che   │
+    └───────┴────────┘
+    "
 
     #Write-Host "game border"
     #$code
 
     #Display user's score
-    "`n`n"
-    $mnchash
+    $code_table
+    $user_score
     "`n"
 }
 
@@ -138,8 +159,16 @@ Do
     $userguess = Get-Code
     $attempts_array += $userguess
     $mnchash = Check-Guess $userguess $code
-    Display-Game $code $mnchash
+    Display-Game $userguess $mnchash
 
 }
 While ($mnchash.cheese -lt 4)  # Game ends at 4 cheeses
-Write-Host "`n`n`nYOU WON!!!!!!`n`n`n"
+Write-Host "`n
+ __ __   ___   __ __      __    __  ____  ____  
+|  T  T /   \ |  T  T    |  T__T  Tl    j|    \ 
+|  |  |Y     Y|  |  |    |  |  |  | |  T |  _  Y
+|  ~  ||  O  ||  |  |    |  |  |  | |  | |  |  |
+l___, ||     ||  :  |    l  `  '  ! |  | |  |  |
+|     !l     !l     |     \      /  j  l |  |  |
+l____/  \___/  \__,_j      \_/\_/  |____jl__j__j
+                                               `n"
