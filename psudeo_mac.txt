@@ -1,0 +1,23 @@
+# Mac N Cheese
+Start Script
+Function Random-Start() #initialize variables using get random
+    $a,$b,$c,$d = (get-random -min 0 -max 9),(get-random -min 0 -max 9),(get-random -min 0 -max 9),(get-random -min 0 -max 9)
+$code= @() #where we will store the code 
+$code=($a,$b,$c,$d) #taking the randomly generated variables and storing them in the array 
+Function Check Guess ($userguess)
+    $mnchash = @{
+        cheese = 0 # set to 0 each time we call the function     
+        mac=0 # set to 0 each time we call the function
+    }
+    For ($j = 0 to 3)
+        For ($i = 0 to 3)
+            IF ($userguess[$i] -eq $code[$j])
+                IF ($i -eq $j)
+                    $mnchash['cheese']++
+                Else 
+                    $mnchash['mac']++   
+                    
+Function Display-Game($code, $mnchash)
+    Display-Host "game border"
+    Display-Host $code
+    Display-Host $mnchash
