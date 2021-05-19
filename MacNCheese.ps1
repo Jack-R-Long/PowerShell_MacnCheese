@@ -38,6 +38,8 @@ Function Check-Guess ($userguess, $code)
             {
                 # Found a number in the correct spot
                 $temphash['cheese']++
+                # Add correct guess to correct_code array
+                $code_correct[$i] = $code[$j]
             }
             ELSE
             {
@@ -82,19 +84,24 @@ Function Get-Code
 
 Function Display-Game ($userguess, $mnchash)
 {
-    # Display game screen
-    $guess0 = $userguess[0]
-    $guess1 = $userguess[1]
-    $guess2 = $userguess[2]
-    $guess3 = $userguess[3]
+    # Counter for display vars
+    $counter = 0
+    foreach ($code in $code_correct)
+    {
+        #Dynamically name variables
+        New-Variable -Name "code$counter" -Value $code
+        New-Variable -Name "guess$counter" -Value $userguess[$counter]
+        $counter++
+    }
+    # Score table ASCII art
     $code_table = "
             +-------+-------+-------+-------+
-    Code    |   X   |   X   |   X   |   X   |
+    Code    |   $code0   |   $code1    |   $code2   |   $code3  |
             +-------+-------+-------+-------+
     Guess   |   $guess0   |   $guess1   |   $guess2    |   $guess3  |
             +-------+-------+-------+-------+
     "
-    # Display score in a table
+    # Mac n Cheese ASCII Art
     $mac = $mnchash.mac
     $che = $mnchash.cheese
     $user_score = "
@@ -105,10 +112,7 @@ Function Display-Game ($userguess, $mnchash)
     └───────┴────────┘
     "
 
-    #Write-Host "game border"
-    #$code
-
-    #Display user's score
+    #Display scores in ASCII art
     $code_table
     $user_score
     "`n"
@@ -139,6 +143,7 @@ Function Get-Title
 # Global variables
 $mnchash = @{"mac" = 0; "cheese" = 0}
 $code = Random-Start
+$code_correct = ("x", "x", "x", "x")
 $attempts_array = @()
 
 # Clear screen
